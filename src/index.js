@@ -289,7 +289,7 @@ function checkPatternMatch() {
     }
   }
 }
-        score += 100;
+        level += 1;
         updateScore();
         setNewTargetPattern();
         return;
