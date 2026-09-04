@@ -39,7 +39,8 @@ let currentX = 0;
 let currentY = 0;
 let score = 0;
 let highScore = 0;
-let isPaused = false;
+let level = 1;
+let patternsCleared = 0;
 let dropCounter = 0;
 let dropInterval = 1000;
 let lastTime = 0;
@@ -269,7 +270,25 @@ function checkPatternMatch() {
   for (let startRow = 0; startRow <= ROWS - PATTERN_SIZE; startRow++) {
     for (let startCol = 0; startCol <= COLS - PATTERN_SIZE; startCol++) {
       if (matchesPattern(startRow, startCol)) {
+        function checkPatternMatch() {
+  for (let startRow = 0; startRow <= ROWS - PATTERN_SIZE; startRow++) {
+    for (let startCol = 0; startCol <= COLS - PATTERN_SIZE; startCol++) {
+      if (matchesPattern(startRow, startCol)) {
         clearPattern(startRow, startCol);
+        score += 100;
+        patternsCleared++;
+        if (patternsCleared % 5 === 0) {
+          level++;
+          dropInterval = Math.max(200, 1000 - (level - 1) * 100);
+          document.getElementById("level").textContent = level;
+        }
+        updateScore();
+        setNewTargetPattern();
+        return;
+      }
+    }
+  }
+}
         score += 100;
         updateScore();
         setNewTargetPattern();
